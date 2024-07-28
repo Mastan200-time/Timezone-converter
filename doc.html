@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastan's Time Zone Converter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle, #0f0c29, #302b63, #24243e);
+            color: #f1f1f1;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0 1rem;
+            overflow: hidden;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            color: #edf2f4;
+            padding: 1.5rem;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #ef233c;
+            border-radius: 10px;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+        
+        header p {
+            font-family: 'Roboto', sans-serif;
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-top: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .block {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            width: 100%;
+            color: #edf2f4;
+            max-width: 600px;
+        }
+        
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        input[type="datetime-local"], select {
+            background-color: #3a3a52;
+            color: #edf2f4;
+            border: 2px solid #ef233c;
+            border-radius: 5px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #ef233c, #d90429);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #d90429, #9d0208);
+        }
+        
+        .result h3 {
+            margin-top: 0;
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #8d99ae;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+        
+        footer a {
+            color: #ef233c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Futuristic Time Zone Converter</h1>
+        <p>Convert IST to Other Time Zones</p>
+    </header>
+    <div class="container">
+        <div class="block">
+            <label for="datetime-ist">Select Date and Time (IST):</label>
+            <input type="datetime-local" id="datetime-ist">
+            <label for="timezone-select">Select Target Time Zone:</label>
+            <select id="timezone-select">
+                <option value="-9.5">Eastern Time (ET)</option>
+                <option value="-10.5">Central Daylight Time (CDT)</option>
+                <option value="-12.5">Pacific Time (PT)</option>
+            </select>
+            <button onclick="convertTime()">Convert</button>
+        </div>
+        <div class="block">
+            <div class="result" id="result">
+                <h3>Converted Time</h3>
+                <p>Select a date and time to see the converted time.</p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Designed by <a href="#">Mastan Katike</a></p>
+    </footer>
+    <script>
+        function convertTime() {
+            const input = document.getElementById('datetime-ist').value;
+            if (!input) {
+                alert('Please select a date and time.');
+                return;
+            }
+
+            const istDate = new Date(input);
+            const timezoneOffset = parseFloat(document.getElementById('timezone-select').value) * 3600 * 1000;
+            const convertedDate = new Date(istDate.getTime() + timezoneOffset);
+            
+            const options = {
+                year: 'numeric', month: 'long', day: 'numeric',
+                hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short'
+            };
+            const result = document.getElementById('result');
+            result.innerHTML = `
+                <h3>Converted Time</h3>
+                <p>${convertedDate.toLocaleString(undefined, options)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
